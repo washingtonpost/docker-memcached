@@ -17,6 +17,6 @@ else
   echo "MAX_CONNS: ${MAX_CONNS}"
   echo "CORE_COUNT: ${CORE_COUNT}"
   
-  exec memcached -m $CACHE_SIZE -t $CORE_COUNT -c $MAX_CONNS $EXTRA_OPTIONS
+  exec memcached -m $CACHE_SIZE -t $CORE_COUNT -c $MAX_CONNS $MEMCACHED_EXTRA_OPTIONS
 fi
 

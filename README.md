@@ -29,9 +29,9 @@ For an r3.large instance with 2 cores, 15GB of RAM, and a nf_conntrack_max of 64
 memcached -m 14336 -t 2 -c 64000
 ```
 
-If you want to add additional options to this command line, set the `EXTRA_OPTIONS` environment variable. For example you can set a larger max item size to 10m (from the default of 1m) by adding this environment variable.
+If you want to add additional options to this command line, set the `MEMCACHED_EXTRA_OPTIONS` environment variable. For example you can set a larger max item size to 10m (from the default of 1m) by adding this environment variable.
 ```
-export EXTRA_OPTIONS="-I 10m"
+export MEMCACHED_EXTRA_OPTIONS="-I 10m"
 ```
 
 If you want to disable the automatic configuration and just explicitly set all the command line options just set the Docker Compose command option to be all the command line parameters.

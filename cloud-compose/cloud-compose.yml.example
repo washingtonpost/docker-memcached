@@ -3,6 +3,8 @@ cluster:
   search_path:
     - ../docker-memcached/cloud-compose/templates
     - ../docker-memcached
+  environment:
+    MEMCACHED_EXTRA_OPTIONS: "-I 1m"
   logging:
     driver: awslogs 
     meta:
