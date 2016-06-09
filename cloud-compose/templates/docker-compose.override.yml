@@ -11,5 +11,6 @@ services:
         awslogs-stream: memcached-${NODE_ID}
     {%- endif %}
     {%- if MEMCACHED_EXTRA_OPTIONS is defined %}
+    environment:
       EXTRA_OPTIONS: {{ MEMCACHED_EXTRA_OPTIONS }}
     {%- endif %}

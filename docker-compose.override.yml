@@ -2,3 +2,5 @@ version: '2'
 services:
   memcached:
     build: .
+    environment:
+      EXTRA_OPTIONS: "-I 10m"
