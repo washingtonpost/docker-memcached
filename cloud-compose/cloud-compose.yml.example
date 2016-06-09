@@ -1,0 +1,43 @@
+cluster:
+  name: ${CLUSTER_NAME}
+  search_path:
+    - ../docker-mongodb/cloud-compose/templates
+    - ../docker-mongodb
+  logging:
+    driver: awslogs 
+    meta:
+      group: /cloud-compose/${CLUSTER_NAME}
+  aws:
+    ami: ${IMAGE_ID} or ${IMAGE_NAME_TAG}
+    username: ${IMAGE_USERNAME}
+    security_groups: ${SECURITY_GROUP_ID}
+    ebs_optimized: false
+    instance_type: t2.medium
+    keypair: drydock
+    instance_policy: '{ "Statement": [ { "Action": [ "ec2:CreateSnapshot", "ec2:CreateTags", "ec2:DeleteSnapshot", "ec2:DescribeInstances", "ec2:DescribeSnapshotAttribute", "ec2:DescribeSnapshots", "ec2:DescribeVolumeAttribute", "ec2:DescribeVolumeStatus", "ec2:DescribeVolumes", "ec2:ModifySnapshotAttribute", "ec2:ResetSnapshotAttribute", "logs:CreateLogStream", "logs:PutLogEvents" ], "Effect": "Allow", "Resource": [ "*" ] } ] }'
+    volumes:
+      - name: root
+        size: 30G
+      - name: docker
+        size: 20G
+        block: /dev/xvdz
+        file_system: lvm2
+        meta:
+          group: docker
+          volumes:
+            - name: data 
+              size: 19G
+            - name: metadata
+              size: 900M 
+    tags:
+      datadog: monitored
+    nodes:
+      - id: 0
+        ip: ${CLUSTER_NODE_0_IP}
+        subnet: ${CLUSTER_NODE_0_SUBNET}
+      - id: 1
+        ip: ${CLUSTER_NODE_1_IP}
+        subnet: ${CLUSTER_NODE_1_SUBNET}
+      - id: 2
+        ip: ${CLUSTER_NODE_2_IP}
+        subnet: ${CLUSTER_NODE_2_SUBNET}

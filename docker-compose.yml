@@ -1,0 +1,7 @@
+version: '2'
+services:
+  memcached:
+    container_name: memcached 
+    build: .
+    ports:
+      - "11211:11211"

@@ -1,0 +1,15 @@
+version: "2"
+services:
+  memcached:
+    image: washpost/memcached:1.4
+    restart: always
+    {%- if logging is defined and logging.driver is defined and logging.driver == "awslogs" %}
+    logging: 
+      driver: awslogs
+      options:
+        awslogs-group: {{ logging.meta.group }}
+        awslogs-stream: memcached-${NODE_ID}
+    {%- endif %}
+    {%- if MEMCACHED_EXTRA_OPTIONS is defined %}
+      EXTRA_OPTIONS: {{ MEMCACHED_EXTRA_OPTIONS }}
+    {%- endif %}
