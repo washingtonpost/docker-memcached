@@ -12,5 +12,5 @@ services:
     {%- endif %}
     {%- if MEMCACHED_EXTRA_OPTIONS is defined %}
     environment:
-      EXTRA_OPTIONS: {{ MEMCACHED_EXTRA_OPTIONS }}
+      EXTRA_OPTIONS: "{{ MEMCACHED_EXTRA_OPTIONS }}"
     {%- endif %}

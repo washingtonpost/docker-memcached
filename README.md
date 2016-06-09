@@ -18,6 +18,28 @@ cloud-compose cluster up
 ```
 
 # FAQ
+## How is memcached configured?
+Memcached is automatically configured with reasonable default values based on the size of the server.
+* max memory (-m) = available memory on the server minus 1GB
+* max connections (-c) = the value of nf_conntrack_max
+* threads (-t) = the number of CPU cores
+
+For an r3.large instance with 2 cores, 15GB of RAM, and a nf_conntrack_max of 64000 the automatic memcached configuration would generate a command like this:
+```
+memcached -m 14336 -t 2 -c 64000
+```
+
+If you want to add additional options to this command line, set the `EXTRA_OPTIONS` environment variable. For example you can set a larger max item size to 10m (from the default of 1m) by adding this environment variable.
+```
+export EXTRA_OPTIONS="-I 10m"
+```
+
+If you want to disable the automatic configuration and just explicitly set all the command line options just set the Docker Compose command option to be all the command line parameters.
+```yaml
+memcached:
+  command: -m 1024 -t 1
+```
+
 ## How do I manage secrets?
 Secrets can be configured using environment variables. [Envdir](https://pypi.python.org/pypi/envdir) is highly recommended as a tool for switching between sets of environment variables in case you need to manage multiple clusters.
 At a minimum you will need AWS_ACCESS_KEY_ID, AWS_REGION, and AWS_SECRET_ACCESS_KEY. 
