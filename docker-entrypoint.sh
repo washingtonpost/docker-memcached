@@ -9,7 +9,7 @@ if [ "${1:0:1}" = '-' ]; then
 else
   MEM_TOTAL=`cat /proc/meminfo | grep MemTotal | sed "s/MemTotal:\s*//" | sed "s/ kB//"`
   # convert to MB's and leave 1GB for the OS
-  CACHE_SIZE=$(expr $MEM_TOTAL / 1024 - 1024)
+  CACHE_SIZE=$(expr $MEM_TOTAL / 1024 - 2048)
   MAX_CONNS=$(sysctl -n net.netfilter.nf_conntrack_max)
   CORE_COUNT=$(nproc)
   echo "MEM_TOTAL: ${MEM_TOTAL} KB"
