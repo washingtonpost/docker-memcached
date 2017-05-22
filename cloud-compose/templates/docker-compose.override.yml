@@ -1,7 +1,7 @@
 version: "2"
 services:
   memcached:
-    image: washpost/memcached:1.4.25
+    image: washpost/memcached:1.4.36
     restart: always
     network_mode: host
     {%- if logging is defined and logging.driver is defined and logging.driver == "awslogs" %}

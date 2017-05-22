@@ -10,13 +10,13 @@ else
   MEM_TOTAL=`cat /proc/meminfo | grep MemTotal | sed "s/MemTotal:\s*//" | sed "s/ kB//"`
   # convert to MB's and leave 1GB for the OS
   CACHE_SIZE=$(expr $MEM_TOTAL / 1024 - 2048)
-  MAX_CONNS=$(sysctl -n net.netfilter.nf_conntrack_max)
+  MAX_CONNS=$(ulimit -n)
   CORE_COUNT=$(nproc)
   echo "MEM_TOTAL: ${MEM_TOTAL} KB"
   echo "CACHE_SIZE: ${CACHE_SIZE} MB"
   echo "MAX_CONNS: ${MAX_CONNS}"
   echo "CORE_COUNT: ${CORE_COUNT}"
   
-  exec memcached -m $CACHE_SIZE -t $CORE_COUNT -c $MAX_CONNS $MEMCACHED_EXTRA_OPTIONS
+  exec memcached -m $CACHE_SIZE -t $CORE_COUNT -c $MAX_CONNS -o modern $MEMCACHED_EXTRA_OPTIONS
 fi
 
